@@ -35,7 +35,7 @@ namespace CreditCards
             
             services.AddScoped<ICreditCardApplicationRepository, EntityFrameworkCreditCardApplicationRepository>();
            
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc();
             
         
             if (_currentEnvironment.IsDevelopment())
@@ -64,12 +64,11 @@ namespace CreditCards
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseRouting();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(routes =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
